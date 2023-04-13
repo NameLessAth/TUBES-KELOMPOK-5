@@ -1,6 +1,7 @@
 NMax = 120
-
+Mark = False
 # recursive function : Len, Append, Remove, 
+
 def Tail(arrayLama):
     arrayBaru = [None for i in range(NMax)]
     for i in range(1, NMax):
@@ -11,33 +12,21 @@ def Tail(arrayLama):
     return arrayBaru
 
 def Len(arr):
-    if arr[0] == None:
+    if arr[0] == Mark:
         return 0
     return 1+Len(Tail(arr))
 
 # per array an
 def Append(arr, elm, i=0):
-    if arr[i] == None:
-        arr[i] = elm; return arr
+    if arr[i] == Mark:
+        arr[i] = elm; arr[i+1] = Mark; return arr
     return Append(arr, elm, i+1)
-
-def AppendArr(arr1, arr2):
-    yanghendakdiappend = ""
-    for i in range(len(str(arr2))):
-        if str(arr2)[i] != "[" and str(arr2)[i] != "," and str(arr2)[i] != "]":
-            yanghendakdiappend += str(arr2)[i]
-        else:                                                               
-            if str(arr2)[i] == "," or str(arr2)[i] == "]":
-                Append(arr1, int(yanghendakdiappend))
-                yanghendakdiappend = ""
-    return arr1
 
 def Remove(arrayLama, elm, arrayBaru = [None for i in range(NMax)], i=0, j=0, rem=False):
     if arrayLama[i] == None: rem = False; return arrayBaru
     elif arrayLama[i] == elm and rem == False: rem = True; j-=1
     else: arrayBaru[j] = arrayLama[i]
     return Remove(arrayLama, elm, arrayBaru=arrayBaru, i=i+1, j=j+1, rem=rem)
-
 
 class user:
     def __init__(self, username : str, password : str, role : str):
@@ -56,10 +45,10 @@ class bahan_bangunan:
         self.nama = nama
         self.deskripsi = deskripsi
         self.jumlah = jumlah
-
-def convertuser(csv : str):
-    arrayBaru = [None for i in range(NMax)]
-    a = None; b = None; c = None; d = True
+        
+def convertuser(csv = "user.csv"):
+    arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
+    a = None; b = None; c = None
     fileYangDibaca = open(csv); k=0; l=0; count = 0
     for line in fileYangDibaca:
         if count == 0:
@@ -78,19 +67,17 @@ def convertuser(csv : str):
                             k+=1
                         else:
                             c = stringYangDiappend
-                            arrayBaru[l] = user(a, b, c)
+                            Append(arrayBaru, user(a,b,c))
                             k = 0
-                            l += 1
-                            d = False
                         stringYangDiappend = ""
                     elif line[i] != ";": 
                         stringYangDiappend += line[i]
     return arrayBaru
 
-def convertbb(csv : str):
-    arrayBaru = [None for i in range(NMax)]
+def convertbb(csv = "bahan_bangunan.csv"):
+    arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
     a = None; b = None; c = None; d = True
-    fileYangDibaca = open(csv); k=0; l=0; count=0
+    fileYangDibaca = open(csv); k=0; count=0
     for line in fileYangDibaca:
         if count == 0:
             count += 1
@@ -108,18 +95,17 @@ def convertbb(csv : str):
                             k+=1
                         else:
                             c = int(stringYangDiappend)
-                            arrayBaru[l] = bahan_bangunan(a, b, c)
+                            Append(arrayBaru, bahan_bangunan(a, b, c))
                             k = 0
-                            l += 1
                         stringYangDiappend = ""
                     elif line[i] != ";": 
                         stringYangDiappend += line[i]
     return arrayBaru
 
-def convertcandi(csv : str):
-    arrayBaru = [None for i in range(NMax)]
-    a = None; b = None; c = None; d = None; e = None; acuan = True
-    fileYangDibaca = open(csv); k=0; l=0; m=0
+def convertcandi(csv = "candi.csv"):
+    arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
+    a = None; b = None; c = None; d = None; e = None
+    fileYangDibaca = open(csv); k=0; m=0
     for line in fileYangDibaca:
         if m == 0:
             m += 1
@@ -143,11 +129,10 @@ def convertcandi(csv : str):
                             k += 1
                         else:
                             e = int(stringYangDiappend)
-                            arrayBaru[l] = candi(a, b, c, d, e)
+                            Append(arrayBaru, candi(a, b, c, d, e))
                             k = 0
-                            l += 1
-                            acuan = False
                         stringYangDiappend = ""
                     elif line[i] != ";": 
                         stringYangDiappend += line[i]
     return arrayBaru
+
