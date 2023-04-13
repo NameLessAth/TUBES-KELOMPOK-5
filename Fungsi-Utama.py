@@ -1,6 +1,8 @@
 NMax = 120
-Mark = False
-# recursive function : Len, Append, Remove, 
+Mark = "MARK"
+# recursive function : Len, Append
+
+# per array an
 def Tail(arrayLama):
     arrayBaru = [None for i in range(NMax)]
     for i in range(1, NMax):
@@ -15,7 +17,6 @@ def Len(arr):
         return 0
     return Len(Tail(arr)) if (arr[0] == None) else 1+Len(Tail(arr))
 
-# per array an
 def Append(arr, elm, i=0):
     if arr[i] == Mark:
         arr[i] = elm; arr[i+1] = Mark; return arr
@@ -23,6 +24,7 @@ def Append(arr, elm, i=0):
         arr[i] = elm; return arr
     return Append(arr, elm, i+1)
 
+# csv parser
 class user:
     def __init__(self, username : str, password : str, role : str):
         self.username = username
@@ -41,7 +43,7 @@ class bahan_bangunan:
         self.deskripsi = deskripsi
         self.jumlah = jumlah
 
-def convertuser(csv = "user.csv"):
+def convertuser(csv : str = "user.csv") -> list :
     arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
     a = None; b = None; c = None
     fileYangDibaca = open(csv); k=0; l=0; count = 0
@@ -51,25 +53,25 @@ def convertuser(csv = "user.csv"):
         else:
             stringYangDiappend = ""
             for i in range(len(line)):
-                if i != len(line)-1:
-                    if line[i+1] == "\n" or line[i+1] == ";":
+                if line[i] == "\n" or line[i] == ";" or i == len(line)-1:
+                    if i == len(line)-1 and line[i] != "\n":
                         stringYangDiappend += line[i]
-                        if k == 0:
-                            a = stringYangDiappend
-                            k+=1
-                        elif k == 1:
-                            b = stringYangDiappend
-                            k+=1
-                        else:
-                            c = stringYangDiappend
-                            Append(arrayBaru, user(a,b,c))
-                            k = 0
-                        stringYangDiappend = ""
-                    elif line[i] != ";": 
-                        stringYangDiappend += line[i]
+                    if k == 0:
+                        a = stringYangDiappend
+                        k+=1
+                    elif k == 1:
+                        b = stringYangDiappend
+                        k+=1
+                    else:
+                        c = stringYangDiappend
+                        Append(arrayBaru, user(a,b,c))
+                        k = 0
+                    stringYangDiappend = ""
+                else: 
+                    stringYangDiappend += line[i]
     return arrayBaru
 
-def convertbb(csv = "bahan_bangunan.csv"):
+def convertbb(csv : str = "bahan_bangunan.csv") -> list :
     arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
     a = None; b = None; c = None; d = True
     fileYangDibaca = open(csv); k=0; count=0
@@ -79,25 +81,25 @@ def convertbb(csv = "bahan_bangunan.csv"):
         else:
             stringYangDiappend = ""
             for i in range(len(line)):
-                if i != len(line)-1:
-                    if line[i+1] == "\n" or line[i+1] == ";":
+                if line[i] == "\n" or line[i] == ";" or i == len(line)-1:
+                    if i == len(line)-1 and line[i] != "\n":
                         stringYangDiappend += line[i]
-                        if k == 0:
-                            a = stringYangDiappend
-                            k+=1
-                        elif k == 1:
-                            b = stringYangDiappend
-                            k+=1
-                        else:
-                            c = int(stringYangDiappend)
-                            Append(arrayBaru, bahan_bangunan(a, b, c))
-                            k = 0
-                        stringYangDiappend = ""
-                    elif line[i] != ";": 
-                        stringYangDiappend += line[i]
+                    if k == 0:
+                        a = stringYangDiappend
+                        k+=1
+                    elif k == 1:
+                        b = stringYangDiappend
+                        k+=1
+                    else:
+                        c = int(stringYangDiappend)
+                        Append(arrayBaru, bahan_bangunan(a, b, c))
+                        k = 0
+                    stringYangDiappend = ""
+                else: 
+                    stringYangDiappend += line[i]
     return arrayBaru
 
-def convertcandi(csv = "candi.csv"):
+def convertcandi(csv : str = "candi.csv") -> list :
     arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
     a = None; b = None; c = None; d = None; e = None
     fileYangDibaca = open(csv); k=0; m=0
@@ -107,26 +109,27 @@ def convertcandi(csv = "candi.csv"):
         else:
             stringYangDiappend = ""
             for i in range(len(line)):
-                if i != len(line)-1:
-                    if line[i+1] == "\n" or line[i+1] == ";":
+                if line[i] == "\n" or line[i] == ";" or i == len(line)-1:
+                    if i == len(line)-1 and line[i] != "\n":
                         stringYangDiappend += line[i]
-                        if k == 0:
-                            a = int(stringYangDiappend)
-                            k+=1
-                        elif k == 1:
-                            b = stringYangDiappend
-                            k+=1
-                        elif k == 2:
-                            c = int(stringYangDiappend)
-                            k += 1
-                        elif k == 3:
-                            d = int(stringYangDiappend)
-                            k += 1
-                        else:
-                            e = int(stringYangDiappend)
-                            Append(arrayBaru, candi(a, b, c, d, e))
-                            k = 0
-                        stringYangDiappend = ""
-                    elif line[i] != ";": 
-                        stringYangDiappend += line[i]
+                    if k == 0:
+                        a = int(stringYangDiappend)
+                        k+=1
+                    elif k == 1:
+                        b = stringYangDiappend
+                        k+=1
+                    elif k == 2:
+                        c = int(stringYangDiappend)
+                        k += 1
+                    elif k == 3:
+                        d = int(stringYangDiappend)
+                        k += 1
+                    else:
+                        e = int(stringYangDiappend)
+                        Append(arrayBaru, candi(a, b, c, d, e))
+                        k = 0
+                    stringYangDiappend = ""
+                else: 
+                    stringYangDiappend += line[i]
     return arrayBaru
+
