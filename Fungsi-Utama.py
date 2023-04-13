@@ -1,7 +1,6 @@
 NMax = 120
 Mark = False
 # recursive function : Len, Append, Remove, 
-
 def Tail(arrayLama):
     arrayBaru = [None for i in range(NMax)]
     for i in range(1, NMax):
@@ -14,19 +13,15 @@ def Tail(arrayLama):
 def Len(arr):
     if arr[0] == Mark:
         return 0
-    return 1+Len(Tail(arr))
+    return Len(Tail(arr)) if (arr[0] == None) else 1+Len(Tail(arr))
 
 # per array an
 def Append(arr, elm, i=0):
     if arr[i] == Mark:
         arr[i] = elm; arr[i+1] = Mark; return arr
+    elif arr[i] == None:
+        arr[i] = elm; return arr
     return Append(arr, elm, i+1)
-
-def Remove(arrayLama, elm, arrayBaru = [None for i in range(NMax)], i=0, j=0, rem=False):
-    if arrayLama[i] == None: rem = False; return arrayBaru
-    elif arrayLama[i] == elm and rem == False: rem = True; j-=1
-    else: arrayBaru[j] = arrayLama[i]
-    return Remove(arrayLama, elm, arrayBaru=arrayBaru, i=i+1, j=j+1, rem=rem)
 
 class user:
     def __init__(self, username : str, password : str, role : str):
@@ -45,7 +40,7 @@ class bahan_bangunan:
         self.nama = nama
         self.deskripsi = deskripsi
         self.jumlah = jumlah
-        
+
 def convertuser(csv = "user.csv"):
     arrayBaru = [None for i in range(NMax)]; arrayBaru[0] = Mark
     a = None; b = None; c = None
@@ -135,4 +130,3 @@ def convertcandi(csv = "candi.csv"):
                     elif line[i] != ";": 
                         stringYangDiappend += line[i]
     return arrayBaru
-
