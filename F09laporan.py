@@ -9,7 +9,7 @@ from typing import List
 
 from Fungsi2Utama import *
 
-def getLaporan(user : list, bahan : list, candi : list) -> tuple[int, int, int, str, str, str, str, str]:
+def getLaporan(user : list, bahan : list, candi : list) -> tuple[int, int, int, str, str, int, int, int]:
     jinpengumpul = 0; jinpembangun = 0; topterajin = "-"; toptermalas = "-"; pasir = 0; batu = 0; air = 0
     
     # menghitung batu pasir air
