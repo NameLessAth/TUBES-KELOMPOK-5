@@ -2,13 +2,15 @@ NMax = 120
 Mark = "MARK"
 # recursive function : Len, Append
 
+
 # per array an
 def Tail(arrayLama):
     arrayBaru = [None for i in range(NMax)]
     for i in range(1, NMax):
-        if arrayLama[i] != None:
+        if arrayLama[i] != Mark:
             arrayBaru[i-1] = arrayLama[i]
         else:
+            arrayBaru[i-1] = Mark
             break
     return arrayBaru
 
@@ -17,12 +19,46 @@ def Len(arr):
         return 0
     return Len(Tail(arr)) if (arr[0] == None) else 1+Len(Tail(arr))
 
-def Append(arr, elm, i=0):
+def Append(arr : list, elm : any, i=0) -> list:
     if arr[i] == Mark:
         arr[i] = elm; arr[i+1] = Mark; return arr
     elif arr[i] == None:
         arr[i] = elm; return arr
     return Append(arr, elm, i+1)
+
+def Max(arr):
+    maks = arr[0]
+    for i in range(1, Len(arr)):
+        if arr[i] > maks:
+            maks = arr[i]
+    return maks
+
+def Min(arr):
+    mini = arr[0]
+    for i in range(1, Len(arr)):
+        if arr[i] < mini:
+            mini = arr[i]
+    return mini
+        
+
+# compare string
+def OrdChar(char):
+    charlist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    for i in range(1, len(charlist)+1):
+        if char == charlist[i-1]:
+            return i
+
+def CompareString(string1 : str, string2 : str) -> str :
+    shorterstring = (lambda x, y : x if (len(x) <= len(y)) else y)(string1, string2)
+    i = 0
+    while i != len(shorterstring)-1 and string1[i] == string2[i]:
+        i += 1
+    if i == len(shorterstring)-1 and string1[i] == string2[i]:
+        return shorterstring
+    elif OrdChar(string1[i]) >= OrdChar(string2[i]):
+        return string2
+    else:
+        return string1
 
 # csv parser
 class user:
