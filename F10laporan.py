@@ -7,9 +7,9 @@ import datetime
 from typing import List
 
 
-from Fungsi2Utama import *
+from FungsiUtama import *
 
-def LaporanCandi(candi : list) -> tuple[int, int, int, int, int, int, int, int]:
+def LaporanCandi(candi : list):
     TotalCandi = 0; TotalPasir = 0; TotalBatu = 0; TotalAir = 0; IDMahal = 0; HargaMahal = 0; IDMurah = 0; HargaMurah = 0
         # mengumpulkan data2 seperti total2 dari bahan
     for i in range(Len(candi)):
@@ -31,14 +31,14 @@ def LaporanCandi(candi : list) -> tuple[int, int, int, int, int, int, int, int]:
         # cari nilai max 
         HargaMahal = -9999
         for i in range(Len(listhargacandi)):
-            if listhargacandi[i] > HargaMahal and listhargacandi[i] != None:
+            if listhargacandi[i] != None and listhargacandi[i] > HargaMahal:
                 HargaMahal = listhargacandi[i]
                 IDMahal = i+1
         
         # cari nilai min
         HargaMurah = HargaMahal
         for i in range(Len(listhargacandi)):
-            if listhargacandi[i] < HargaMurah and listhargacandi[i] != None:
+            if listhargacandi[i] != None and listhargacandi[i] < HargaMurah:
                 HargaMurah = listhargacandi[i]
                 IDMurah = i+1
     
