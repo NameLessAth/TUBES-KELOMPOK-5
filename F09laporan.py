@@ -7,7 +7,7 @@ import datetime
 from typing import List
 
 
-from Fungsi2Utama import *
+from FungsiUtama import *
 
 def LaporanJin(user : list, bahan : list, candi : list) -> tuple[int, int, int, str, str, int, int, int]:
     jinpengumpul = 0; jinpembangun = 0; topterajin = "-"; toptermalas = "-"; pasir = 0; batu = 0; air = 0
@@ -23,18 +23,20 @@ def LaporanJin(user : list, bahan : list, candi : list) -> tuple[int, int, int, 
     
     # menghitung jin jin
     for i in range(2, Len(user)):
-        if user[i].role == "jin_pengumpul":
-            jinpengumpul += 1
-        else:
-            jinpembangun += 1
+        if user[i] != None:
+            if user[i].role == "jin_pengumpul":
+                jinpengumpul += 1
+            else:
+                jinpembangun += 1
     
     if jinpembangun != 0:
         # menghitung anggota anggota jin nya
         # memasukkan jin jin ke array
         jinlist = [None for i in range(NMax)]; jinlist[0] = Mark
         for i in range(2, Len(user)):
-            if user[i].role == "jin_pembangun":
-                Append(jinlist, user[i].username)
+            if user[i] != None:
+                if user[i].role == "jin_pembangun":
+                    Append(jinlist, user[i].username)
 
         # declare jumlah2 berapa aja yang dibikin
         jumlahdibangun = [0 for i in range(Len(jinlist)+2)]
@@ -42,9 +44,10 @@ def LaporanJin(user : list, bahan : list, candi : list) -> tuple[int, int, int, 
 
         # penghitungan 
         for i in range(Len(candi)):
-            for j in range(Len(jinlist)):
-                if candi[i].pembuat == jinlist[j]:
-                    jumlahdibangun[j] += 1
+            if candi[i] != None:
+                for j in range(Len(jinlist)):
+                    if candi[i].pembuat == jinlist[j]:
+                        jumlahdibangun[j] += 1
         
         # ambil min dan max
         min = Min(jumlahdibangun)
