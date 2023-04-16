@@ -29,7 +29,7 @@ def LaporanCandi(candi : list) -> tuple[int, int, int, int, int, int, int, int]:
                 listhargacandi[i] = (candi[i].pasir) * 10000 + (candi[i].batu) * 15000 + (candi[i].air) * 7500
 
         # cari nilai max 
-        HargaMahal = 0
+        HargaMahal = -9999
         for i in range(Len(listhargacandi)):
             if listhargacandi[i] > HargaMahal and listhargacandi[i] != None:
                 HargaMahal = listhargacandi[i]
@@ -41,6 +41,15 @@ def LaporanCandi(candi : list) -> tuple[int, int, int, int, int, int, int, int]:
             if listhargacandi[i] < HargaMurah and listhargacandi[i] != None:
                 HargaMurah = listhargacandi[i]
                 IDMurah = i+1
+    
+    else:
+        IDMurah, IDMahal = "-", "-"
 
-    # return value valuenya untuk diberikan di program main.py
-    return [TotalCandi, TotalPasir, TotalBatu, TotalAir, IDMahal, HargaMahal, IDMurah, HargaMurah]
+    # return sebagai print (fungsi void)
+    print(f"""
+> Total Candi: {TotalCandi}
+> Total Pasir yang digunakan: {TotalPasir}
+> Total Batu yang digunakan: {TotalBatu}
+> Total Air yang digunakan: {TotalAir}
+> ID Candi Termahal: {IDMahal} (Rp {HargaMahal})
+> ID Candi Termurah: {IDMurah} (Rp {HargaMurah})""")
