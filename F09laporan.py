@@ -9,7 +9,7 @@ from typing import List
 
 from Fungsi2Utama import *
 
-def getLaporan(user : list, bahan : list, candi : list) -> tuple[int, int, int, str, str, int, int, int]:
+def LaporanJin(user : list, bahan : list, candi : list) -> tuple[int, int, int, str, str, int, int, int]:
     jinpengumpul = 0; jinpembangun = 0; topterajin = "-"; toptermalas = "-"; pasir = 0; batu = 0; air = 0
     
     # menghitung batu pasir air
@@ -68,8 +68,17 @@ def getLaporan(user : list, bahan : list, candi : list) -> tuple[int, int, int, 
         topterajin = terajin[0]
         for i in range(1, Len(terajin)):
             topterajin = CompareString(topterajin, terajin[i])
-
-        return [(jinpembangun+jinpengumpul), jinpengumpul, jinpembangun, topterajin, toptermalas, pasir, air, batu]
     
     else:
-        return [(jinpembangun+jinpengumpul), jinpengumpul, jinpembangun, "-", "-", pasir, air, batu]
+        topterajin, toptermalas = "-", "-"
+
+    # printing fungsi sebagai fungsi void
+    print(f"""
+> Total Jin: {jinpembangun+jinpengumpul}
+> Total Jin Pengumpul: {jinpengumpul}  
+> Total Jin Pembangun: {jinpembangun}
+> Jin Terajin: {topterajin}
+> Jin Termalas: {toptermalas}
+> Jumlah Pasir: {pasir} unit
+> Jumlah Air: {air} unit
+> Jumlah Batu : {batu} unit""")
