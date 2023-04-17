@@ -1,54 +1,52 @@
-import FungsiUtama
+import os
+import sys
+import math
+import time
+import argparse
+import datetime
+from typing import List
 
-def login():
+
+from FungsiUtama import *
+
+def Login(userlist, Role, uname):
     
-    userlist = FungsiUtama.convertuser()
-    userInArr = False
-    notLogin = True
-    
-    perintah = input("Masukkan command yang akan dijalankan! : ")
-    
-    while(perintah != "login"):
-        print(f"{perintah} gagal!")
-        print("Anda belum login, silakan login terlebih dahulu dengan menginput 'login'!")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-        
-    while(notLogin):
+    # ketika belum login
+    if Role == None:
+        # input username dan password
         uname = input("Username: ")
         passw = input("Password: ")
         
-        userInArr = False
-        
+        # looping untuk mencari username dan passwordnya
         i = 0
-        while (i < FungsiUtama.NMax):
-            role = []
-            if (userlist[i] == FungsiUtama.Mark):
-                break
-            else:
-                if (uname == userlist[i].username):
-                    if (passw == userlist[i].password):
-                        print(f"Selamat datang, {uname}!")
-                        print("Masukkan command 'help' untuk daftar command yang dapat kamu panggil.")
-                        userInArr = True
-                        notLogin = False
-                        role = userlist[i].role
-                        break
-                    else:
-                        print("Password salah! ")
-                        userInArr = True
-                        role = userlist[i].role
-                        break
-            i += 1       
-            
-        if (userInArr == False):
-            print("Username tidak terdaftar! ")
-            notLogin = True
-            role = []
-    
-    if (notLogin == False):
-        perintah2 = input("Masukkan command yang akan dijalankan! : ")
-        if (perintah2 == "login"):
-            print("Login gagal!")
-            print(f"Anda telah login dengan username {uname}, silakan lakukan 'logout' sebelum melakukan login kembali!")
+        while (i < NMax):
+            if userlist[i] != None:
+                # jika sudah di mark maka break
+                if (userlist[i] == Mark):
+                    break
 
-login()
+                else:
+
+                    # jika username ada
+                    if (uname == userlist[i].username):
+
+                        # cek password
+                        if (passw == userlist[i].password):
+                            print(f"Selamat datang, {uname}!")
+                            print("Masukkan command 'help' untuk daftar command yang dapat kamu panggil.")
+                            return uname, userlist[i].role
+                        
+                        # password salah
+                        else:
+                            print("Password salah!")
+                            return None, None
+            i += 1
+
+        # username tidak terdaftar
+        print("Username tidak terdaftar! ")       
+        return None, None
+    
+    else:
+        print("Login gagal!")
+        print(f"Anda telah login dengan username {uname}, silakan lakukan 'logout' sebelum melakukan login kembali!")
+        return uname, Role
