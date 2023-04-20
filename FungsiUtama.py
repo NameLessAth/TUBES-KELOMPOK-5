@@ -1,10 +1,19 @@
-NMax = 120
+import os
+import sys
+import math
+import time
+import argparse
+import datetime
+import random as rd
+from typing import List
+
+NMax = 150
 Mark = "MARK"
-# recursive function : Len, Append, AppendMark
+# recursive function : Len, LenSejati, Append, AppendMark, AdaatauTidak
 
 
 # per array an
-def Tail(arrayLama):
+def Tail(arrayLama : list) -> list:
     arrayBaru = [None for i in range(NMax)]
     for i in range(1, NMax):
         if arrayLama[i] != Mark:
@@ -14,10 +23,15 @@ def Tail(arrayLama):
             break
     return arrayBaru
 
-def Len(arr):
+def Len(arr : list) -> int:
     if arr[0] == Mark:
         return 0
     return 1+Len(Tail(arr))
+    
+def LenSejati(arr : list) -> int:
+    if arr[0] == Mark:
+        return 0
+    return (1 if (arr[0] != None) else 0) + LenSejati(Tail(arr))
 
 def Append(arr : list, elm : any, i=0) -> list:
     if arr[i] == Mark:
@@ -31,23 +45,37 @@ def AppendMark(arr : list, elm : any, i=0) -> list:
         arr[i] = elm; arr[i+1] = Mark; return arr
     return AppendMark(arr, elm, i+1)
 
-def Max(arr):
+def AdaatauTidak(arr : list, elm : any, i=0) -> bool:
+    if arr[i] == Mark:
+        return False
+    elif arr[i] == elm:
+        return True
+    return AdaatauTidak(arr=arr, elm=elm, i=i+1)
+
+
+# nilai ekstrim, dan nilai lainnya
+def Max(arr : list) -> int:
     maks = arr[0]
     for i in range(1, Len(arr)):
         if arr[i] > maks:
             maks = arr[i]
     return maks
 
-def Min(arr):
+def Min(arr : list) -> int:
     mini = arr[0]
     for i in range(1, Len(arr)):
         if arr[i] < mini:
             mini = arr[i]
     return mini
-        
+
+def RNG(x : int, y : int) -> int:
+    time.sleep(0.001)
+    seed = datetime.datetime.now().microsecond
+    return ((((seed*9631)+12510) % (y-x)) + x)
+    
 
 # compare string
-def OrdChar(char):
+def OrdChar(char : str) -> int:
     charlist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     for i in range(1, len(charlist)+1):
         if char == charlist[i-1]:
