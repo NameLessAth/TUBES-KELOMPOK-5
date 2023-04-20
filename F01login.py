@@ -1,15 +1,6 @@
-import os
-import sys
-import math
-import time
-import argparse
-import datetime
-from typing import List
-
-
 from FungsiUtama import *
 
-def Login(userlist, Role, uname):
+def Login(userlist : list, Role : str, uname : str) -> tuple[str, str]:
     
     # ketika belum login
     if Role == None:
