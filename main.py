@@ -1,73 +1,99 @@
-import os
-import sys
-import math
-import time
-import argparse
-import datetime
-
 from FungsiUtama import *
 from F01 import *
 from F02 import *
+from F03 import *
+from F04 import *
+from F05 import *
+from F06 import *
+from F07 import *
+from F08 import *
 from F09 import *
 from F10 import *
 from F11 import *
 from F12 import *
-
-userlist = convertuser("user.csv")
-candilist = convertcandi("candi.csv")
-bahanbangunanlist = convertbb("bahan_bangunan.csv")
+from F13 import *
+from F14 import *
+from F15 import *
+from F16 import *
 
 Username, Role = None, None
+
+# input pertama kali
 perintah = input("Masukkan command yang akan dijalankan! : ")
 while perintah != "exit":
+    while True:
+        # F14 - SAVE
+        if perintah == "save":
+            Save(userlist, candilist, bahanbangunanlist)
 
-    # F01 - LOGIN
-    if perintah == "login":
-        Username, Role = Login(userlist, Role, Username)
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-    
-    # F?? - MINIMAL LOGIN
-    if Role == None:
-        print("Kamu Belum login!")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
+        # F15 - HELP
+        if perintah == "help":
+            Help(Username, Role)
 
-    # F02 - LOGOUT
-    if perintah == "logout":
-        Username, Role = logout(Username, Role)
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-    
-    
-    # F09 -  AMBIL LAPORAN JIN
-    if perintah == "laporanjin" and Role == "bandung_bondowoso":
-        LaporanJin(userlist, bahanbangunanlist, candilist)
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-    elif perintah == "laporanjin" and Role != "bandung_bondowoso":
-        print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso.")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-
-    # F10 - AMBIL LAPORAN CANDI
-    if perintah == "laporancandi" and Role == "bandung_bondowoso":
-        LaporanCandi(candilist)
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-    
-    elif perintah == "laporancandi" and Role != "bandung_bondowoso":
-        print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso.")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-
-    # F11 - HANCURKAN CANDI
-    if perintah == "hancurkancandi" and Role == "roro_jonggrang":
-        candilist = HancurkanCandi(candilist)
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-    
-    elif perintah == "hancurkancandi" and Role != "roro_jonggrang":
-        print("Hancurkan candi hanya bisa dilakukan oleh akun Roro Jonggrang!")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
-
-    # F12 - AYAM BERKOKOK
-    if perintah == "ayamberkokok" and Role == "roro_jonggrang":
-        AyamBerkokok(candilist)
-        perintah = "exit"
+        # F01 - LOGIN
+        if perintah == "login":
+            Username, Role = Login(userlist, Role, Username)
         
-    elif perintah == "ayamberkokok" and Role != "roro_jonggrang":
-        print("Ayam Berkokok hanya bisa dilakukan oleh akun Roro Jonggrang")
-        perintah = input("Masukkan command yang akan dijalankan! : ")
+        # F?? - MINIMAL LOGIN
+        if Role == None and perintah != "login" and perintah != "help":
+            print("Kamu Belum login!")
+        
+        # F02 - LOGOUT
+        elif perintah == "logout":
+            Username, Role = Logout(Username, Role)
+        
+        # F03 - SUMMON JIN
+        elif perintah == "summonjin":
+            userlist = summonJin(userlist, Role)
+
+        # F04 - HILANGKAN JIN
+        elif perintah == "hapusjin":
+            userlist, candilist = hapusJin(userlist, candilist, Role)
+
+        # F05 - UBAH ROLE JIN
+        elif perintah == "ubahjin":
+            userlist = ubahJin(userlist, Role)
+
+        # F06 - JIN PEMBANGUN
+        elif perintah == "bangun":
+            candilist, bahanbangunanlist = Bangun(candilist, bahanbangunanlist, Username, Role)
+
+        # F07 - JIN PENGUMPUL
+        elif perintah == "kumpul":
+            bahanbangunanlist = Kumpul(bahanbangunanlist, Role)
+
+        # F08 - BATCH KUMPUL/BANGUN
+        elif perintah == "batchkumpul" or perintah == "batchbangun":
+            userlist, candilist, bahanbangunanlist = Batch(perintah, userlist, candilist, bahanbangunanlist, Role)
+
+        # F09 - AMBIL LAPORAN JIN
+        elif perintah == "laporanjin":
+            LaporanJin(userlist, bahanbangunanlist, candilist, Role)
+
+        # F10 - AMBIL LAPORAN CANDI
+        elif perintah == "laporancandi":
+            LaporanCandi(candilist, Role)
+
+        # F11 - HANCURKAN CANDI
+        elif perintah == "hancurkancandi":
+            candilist = HancurkanCandi(candilist, Role)
+
+        # F12 - AYAM BERKOKOK
+        elif perintah == "ayamberkokok":
+            AyamBerkokok(candilist, Role)
+            
+        break
+    
+    # ketika ayamberkokok, permainan berakhir
+    if perintah == "ayamberkokok" and Role == "roro_jonggrang":
+        break
+    
+    perintah = input("Masukkan command yang akan dijalankan! : ")
+
+# F16 - EXIT
+if perintah == "exit":
+    if Exit():
+        Save(userlist, candilist, bahanbangunanlist)
+
+# goodbye message
+print("sampai jumpa di lain waktu!!!")
