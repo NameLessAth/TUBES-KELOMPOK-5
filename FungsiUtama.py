@@ -71,7 +71,7 @@ def Min(arr : list) -> int:
 def RNG(x : int, y : int) -> int:
     time.sleep(0.001)
     seed = datetime.datetime.now().microsecond
-    return ((((seed*9631)+12510) % (y-x)) + x)
+    return ((((seed*9631)+12510) % (y-x+1)) + x)
     
 
 # compare string
