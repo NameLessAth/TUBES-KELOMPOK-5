@@ -13,22 +13,27 @@ def Bangun(candilist : list, bahanlist : list, uname : str, role : str) -> tuple
             bahanlist[2].jumlah -= airDibutuhkan
 
             # mencari ID candi yang kosong
-            i = 0
-            while(i < NMax):
-
-                # ternyata ID kosong di Mark
-                if candilist[i] == Mark:
-                    AppendMark(candilist, candilist(i, uname, pasirDibutuhkan, batuDibutuhkan, airDibutuhkan))
-                    print(f"Sisa candi yang perlu dibangun : {100-LenSejati(candilist)}")
-                    return candilist, bahanlist
+            # juga kasus ketika candi masih belum 100
+            if LenSejati(candilist) != 100:
+                i = 0
+                while(i < NMax):
+                    
+                    # jika candi belum 100
+                    # ternyata ID kosong di Mark
+                    if candilist[i] == Mark:
+                        AppendMark(candilist, candi(i, uname, pasirDibutuhkan, batuDibutuhkan, airDibutuhkan))
+                        print(f"Sisa candi yang perlu dibangun : {100-LenSejati(candilist)}")
+                        return candilist, bahanlist
+                    
+                    # ID kosong di tengah dan bukan di Mark
+                    elif candilist[i] == None:
+                        Append(candilist, candi(i+1, uname, pasirDibutuhkan, batuDibutuhkan, airDibutuhkan))
+                        print(f"Sisa candi yang perlu dibangun : {100-LenSejati(candilist)}")
+                        return candilist, bahanlist
                 
-                # ID kosong di tengah dan bukan di Mark
-                elif candilist[i] == None:
-                    Append(candilist, candilist(i+1, uname, pasirDibutuhkan, batuDibutuhkan, airDibutuhkan))
-                    print(f"Sisa candi yang perlu dibangun : {100-LenSejati(candilist)}")
-                    return candilist, bahanlist
-            
-                i += 1
+                    i += 1
+            else:
+                print(f"Sisa candi yang perlu dibangun : 0")
         
         # apabila bahan tidak mencukupi
         else:
@@ -40,3 +45,5 @@ Candi tidak bisa dibangun!""")
         print(f"perintah hanya bisa diakses oleh akun jin pembangun")
     
     return candilist, bahanlist
+
+
