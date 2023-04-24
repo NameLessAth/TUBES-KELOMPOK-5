@@ -29,7 +29,7 @@ def LaporanCandi(candi : list, Role : str):
             
             # cari nilai min
             HargaMurah = HargaMahal
-            if Len(listhargacandi) == 1:
+            if LenSejati(listhargacandi) == 1:
                 IDMurah = IDMahal
             else:
                 for i in range(Len(listhargacandi)):
