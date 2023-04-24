@@ -1,6 +1,6 @@
 from FungsiUtama import *
 
-def summonJin(usercsv : list, role : str) -> list:
+def summonJin(usercsv : list, stackUndo : list, role : str) -> list:
     if role == "bandung_bondowoso" and LenSejati(usercsv) < 102:
         
         # formatting
@@ -33,6 +33,10 @@ def summonJin(usercsv : list, role : str) -> list:
                 elif usercsv[i] != None:
                     if usercsv[i].username == uname:
                         print(f"\nUsername \"{uname}\" sudah diambil!\n")
+                        break
+                if stackUndo[i] != None and stackUndo[i] != Mark:
+                    if stackUndo[i][0].username == uname:
+                        print(f"\nUsername \"{uname}\" sudah pernah ada dan sekarang sedang di alam kubur, silahkan pilih username lain!\n")
                         break
                 i += 1
         
