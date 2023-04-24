@@ -1,12 +1,3 @@
-import os
-import sys
-import math
-import time
-import argparse
-import datetime
-from typing import List
-
-
 from FungsiUtama import *
 
 def Undo(userlist : list, candilist : list, stackUndo : list, Role : str) -> tuple[list, list, list]:
