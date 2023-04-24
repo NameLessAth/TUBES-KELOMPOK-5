@@ -1,6 +1,6 @@
 from FungsiUtama import *
 
-def Load():
+def Load() -> tuple[list, list, list]:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("folder", type=str, help="membuka folder tertentu dan meng-load di path tersebut")
@@ -31,3 +31,5 @@ def Load():
             time.sleep(0.1)
         print("selamat datang di permainan!")
         time.sleep(0.1)
+
+        return userlist, candilist, bahanbangunanlist
