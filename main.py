@@ -15,11 +15,18 @@ from F13 import *
 from F14 import *
 from F15 import *
 from F16 import *
+from B04 import *
 
+# stack untuk melakukan Undo
+stackUndo = [None for i in range(NMax)]; stackUndo[0] = Mark
+# variabel user candi dan bahanbangunan untuk menyimpan hasil csv parser
+userlist, candilist, bahanbangunanlist = Load()
+# variabel username dan Role untuk crosschecking akses dan juga printing username dari macam2 fungsi 
 Username, Role = None, None
 
 # input pertama kali
-perintah = input("Masukkan command yang akan dijalankan! : ")
+perintah = (input("Masukkan command yang akan dijalankan! : ")).lower()
+# looping
 while perintah != "exit":
     while True:
         # F14 - SAVE
@@ -48,7 +55,7 @@ while perintah != "exit":
 
         # F04 - HILANGKAN JIN
         elif perintah == "hapusjin":
-            userlist, candilist = hapusJin(userlist, candilist, Role)
+            userlist, candilist, stackUndo = hapusJin(userlist, candilist, stackUndo, Role)
 
         # F05 - UBAH ROLE JIN
         elif perintah == "ubahjin":
@@ -81,14 +88,18 @@ while perintah != "exit":
         # F12 - AYAM BERKOKOK
         elif perintah == "ayamberkokok":
             AyamBerkokok(candilist, Role)
-            
+
+        # B04 - UNDO
+        elif perintah == "undo":
+            userlist, candilist, stackUndo = Undo(userlist, candilist, stackUndo, Role)
+
         break
     
     # ketika ayamberkokok, permainan berakhir
     if perintah == "ayamberkokok" and Role == "roro_jonggrang":
         break
     
-    perintah = input("Masukkan command yang akan dijalankan! : ")
+    perintah = (input("Masukkan command yang akan dijalankan! : ")).lower()
 
 # F16 - EXIT
 if perintah == "exit":
