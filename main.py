@@ -51,7 +51,7 @@ while perintah != "exit":
         
         # F03 - SUMMON JIN
         elif perintah == "summonjin":
-            userlist = summonJin(userlist, Role)
+            userlist = summonJin(userlist, stackUndo, Role)
 
         # F04 - HILANGKAN JIN
         elif perintah == "hapusjin":
