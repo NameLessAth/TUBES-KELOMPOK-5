@@ -23,6 +23,20 @@ def Tail(arrayLama : list) -> list:
             break
     return arrayBaru
 
+def Init(arrayLama : list) -> list:
+    arrayBaru = [None for i in range(NMax)]
+    i = 0
+    if Len(arrayLama) == 0:
+        return arrayLama
+    while (i < NMax):
+        if arrayLama[i+1] != Mark:
+            arrayBaru[i] = arrayLama[i]
+        else:
+            arrayBaru[i] = Mark
+            break
+        i += 1
+    return arrayBaru
+
 def Len(arr : list) -> int:
     if arr[0] == Mark:
         return 0
