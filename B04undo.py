@@ -24,7 +24,22 @@ def Undo(userlist : list, candilist : list, stackUndo : list, Role : str) -> tup
                     i = 0
                     # looping O(n^2) untuk mengcross check apakah ada candi atau tidak dan menempatkannya sesuai id nya
                     while (stackterluar[1][i] != Mark):
-                        candilist[stackterluar[1][i].id-1] = stackterluar[1][i]
+                        # jika tempat candi di undo belum terisi
+                        if candilist[stackterluar[1][i].id-1] == None or candilist[stackterluar[1][i].id-1] == Mark:
+                            candilist[stackterluar[1][i].id-1] = stackterluar[1][i]
+                        # jika tempat candi di undo sudah terisi
+                        else:
+                            # mencari id terdekat yang kosong
+                            idx = 0
+                            while (idx < NMax):
+                                if candilist[idx] == None or candilist[idx] == Mark:
+                                    break
+                                idx += 1
+                            # mengubah id nya supaya sesuai dengan append
+                            stackterluar[1][i].id = idx+1
+                            # memasukkan slot terdekat yang kosong
+                            Append(candilist, stackterluar[1][i])
+                        
                         i += 1
 
                 # stackterluar dihapus
